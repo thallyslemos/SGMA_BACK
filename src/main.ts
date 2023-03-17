@@ -5,7 +5,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception/http-except
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(4000);
+  await app.listen(process.env.PORT || 3000);
 
   app.useGlobalPipes(
     new ValidationPipe({

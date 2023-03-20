@@ -29,12 +29,21 @@ export class StudentsService {
     return await this.primsa.student.findMany();
   }
 
-  findOne(id: string) {
-    return this.primsa.student.findUnique({ where: { id } });
+  async findOne(id: string) {
+    return await this.primsa.student.findUnique({ where: { id } });
   }
 
-  update(id: string, updateStudentDto: UpdateStudentDto) {
-    return this.primsa.student.update({
+  async update(id: string, updateStudentDto: UpdateStudentDto) {
+    const studentExists = await this.primsa.student.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!studentExists) {
+      throw new ConflictException('Aluno não encontrado!');
+    }
+    return await this.primsa.student.update({
       where: {
         id,
       },
@@ -42,7 +51,17 @@ export class StudentsService {
     });
   }
 
-  remove(id: string) {
+  async remove(id: string) {
+    const studentExists = await this.primsa.student.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!studentExists) {
+      throw new ConflictException('Aluno não encontrado!');
+    }
+
     return this.primsa.student.delete({ where: { id } });
   }
 }

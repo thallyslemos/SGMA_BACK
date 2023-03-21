@@ -1,6 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CreateCourseDto } from './dto/create-course.dto';
+import { CreateRegistrationDto } from './dto/create-registration';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Injectable()
@@ -80,6 +81,34 @@ export class CoursesService {
       where: {
         id,
       },
+    });
+  }
+
+  async createRegistration(createDto: CreateRegistrationDto) {
+    const courseExist = await this.prisma.course.findUnique({
+      where: {
+        id: createDto.id_course,
+      },
+    });
+    console.log(courseExist);
+
+    if (!courseExist) {
+      throw new ConflictException('Curso não encontrado"');
+    }
+
+    const studentExist = await this.prisma.student.findUnique({
+      where: {
+        id: createDto.id_student,
+      },
+    });
+    console.log(studentExist);
+
+    if (!studentExist) {
+      throw new ConflictException('Aluno não encontrado"');
+    }
+
+    return await this.prisma.coursesStudents.create({
+      data: createDto,
     });
   }
 }

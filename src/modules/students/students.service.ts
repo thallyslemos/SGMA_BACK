@@ -36,7 +36,7 @@ export class StudentsService {
   async update(id: string, updateStudentDto: UpdateStudentDto) {
     const studentExists = await this.primsa.student.findFirst({
       where: {
-        id: id,
+        id,
       },
     });
 
@@ -54,7 +54,7 @@ export class StudentsService {
   async remove(id: string) {
     const studentExists = await this.primsa.student.findFirst({
       where: {
-        id: id,
+        id,
       },
     });
 

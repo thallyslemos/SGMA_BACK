@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 
@@ -8,9 +8,9 @@ export class StudentsService {
   constructor(private readonly primsa: PrismaService) {}
 
   async create(createStudentDto: CreateStudentDto) {
-    const studentExists = await this.primsa.student.findFirst({
+    const studentExists = await this.primsa.student.findUnique({
       where: {
-        name: createStudentDto.name,
+        cpf: createStudentDto.cpf,
       },
     });
 

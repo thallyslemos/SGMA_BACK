@@ -11,12 +11,15 @@ import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { CreateRegistrationDto } from '../students/dto/create-registration';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Modulos')
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Post()
+  @ApiBody({ type: CreateCourseDto })
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.coursesService.create(createCourseDto);
   }
@@ -32,6 +35,7 @@ export class CoursesController {
   }
 
   @Patch(':id')
+  @ApiBody({ type: UpdateCourseDto })
   update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
     return this.coursesService.update(id, updateCourseDto);
   }

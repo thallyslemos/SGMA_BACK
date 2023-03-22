@@ -10,6 +10,8 @@ import {
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { CreateRegistrationDto } from './dto/create-registration';
+import { UpdateRegistrationDto } from './dto/update-registration.dto';
 
 @Controller('students')
 export class StudentsController {
@@ -18,6 +20,11 @@ export class StudentsController {
   @Post()
   create(@Body() createStudentDto: CreateStudentDto) {
     return this.studentsService.create(createStudentDto);
+  }
+
+  @Post('registration')
+  createRegistration(@Body() registrationDto: CreateRegistrationDto) {
+    return this.studentsService.createRegistration(registrationDto);
   }
 
   @Get()
@@ -33,6 +40,11 @@ export class StudentsController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
     return this.studentsService.update(id, updateStudentDto);
+  }
+
+  @Patch('registration/:id')
+  updateRegistration(@Param('id') id: string, @Body() updateRegistrationDto: UpdateRegistrationDto) {
+    return this.studentsService.updateRegistration(id, updateRegistrationDto);
   }
 
   @Delete(':id')

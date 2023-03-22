@@ -34,9 +34,9 @@ model CoursesStudents {
   course     Course  @relation(fields: [id_course], references: [id])
   id_student String
   student    Student @relation(fields: [id_student], references: [id])
-  grade_1    Float
-  grade_2    Float
-  grade_3    Float
+  grade_1    Float?
+  grade_2    Float?
+  grade_3    Float?
 
   @@map("courses_students")
 }

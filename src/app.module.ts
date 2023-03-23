@@ -6,9 +6,10 @@ import { StudentsModule } from './modules/students/students.module';
 import { CoursesModule } from './modules/courses/courses.module';
 import { PrismaService } from './common/prisma/prisma.service';
 import { SwaggerModule } from '@nestjs/swagger';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), SwaggerModule, StudentsModule, CoursesModule],
+  imports: [ConfigModule.forRoot(), SwaggerModule, StudentsModule, CoursesModule, UsersModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

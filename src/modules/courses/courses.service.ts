@@ -47,13 +47,13 @@ export class CoursesService {
       throw new ConflictException('Courso não cadastrado!');
     }
 
-    const sameName = await this.prisma.course.findFirst({
+    const nameExists = await this.prisma.course.findFirst({
       where: {
         name: updateCourseDto.name,
       },
     });
 
-    if (sameName) {
+    if (nameExists) {
       throw new ConflictException('Já existe outro curso com esse nome!');
     }
 

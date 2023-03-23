@@ -68,36 +68,36 @@ export class StudentsService {
   }
 
   async createRegistration(createDto: CreateRegistrationDto) {
-    const courseExist = await this.prisma.course.findUnique({
+    const courseExists = await this.prisma.course.findUnique({
       where: {
         id: createDto.id_course,
       },
     });
-    console.log(courseExist);
+    console.log(courseExists);
 
-    if (!courseExist) {
+    if (!courseExists) {
       throw new ConflictException('Curso não encontrado"');
     }
 
-    const studentExist = await this.prisma.student.findUnique({
+    const studentExists = await this.prisma.student.findUnique({
       where: {
         id: createDto.id_student,
       },
     });
 
-    if (!studentExist) {
+    if (!studentExists) {
       throw new ConflictException('Aluno não encontrado"');
     }
     
-    const registrationExist = this.prisma.coursesStudents.findFirst({
+    const registrationExists = this.prisma.coursesStudents.findFirst({
       where: {
         id_course: createDto.id_course,
         id_student: createDto.id_student,
       },
     });
 
-    if(registrationExist){
-      throw new ConflictException(`O aluno ${studentExist.name} já está matriculado no modulo ${courseExist.name}.`)
+    if(registrationExists){
+      throw new ConflictException(`O aluno ${studentExists.name} já está matriculado no modulo ${courseExists.name}.`)
     }
     return await this.prisma.coursesStudents.create({
       data: createDto,

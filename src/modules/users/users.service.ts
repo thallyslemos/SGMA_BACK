@@ -2,6 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ValidateUserDto } from './dto/validate-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -70,20 +71,33 @@ export class UsersService {
 
   async remove(id: string) {
     const userExists = await this.prisma.user.findFirst({
-      where:{
-        id
-      }
-    })
+      where: {
+        id,
+      },
+    });
 
     if (!userExists) {
-      throw new ConflictException('Usuário não encontrado"')
+      throw new ConflictException('Usuário não encontrado"');
     }
 
     return await this.prisma.user.delete({
       where: {
-        id
-      }
-    })
-    
+        id,
+      },
+    });
+  }
+
+  async login(user: ValidateUserDto) {
+    const userLogin = await this.prisma.user.findUnique({
+      where: {
+        name: user.username,
+      },
+    });
+
+    if (userLogin && userLogin.password == user.password) {
+      return userLogin;
+    } else {
+      throw new ConflictException('As credencias do usuário não conferem!');
+    }
   }
 }

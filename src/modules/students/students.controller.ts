@@ -14,42 +14,50 @@ import { CreateRegistrationDto } from './dto/create-registration';
 import { UpdateRegistrationDto } from './dto/update-registration.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 
-@ApiTags("Alunos")
+@ApiTags('Alunos')
 @Controller('students')
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
   @Post()
-  @ApiBody({type: CreateStudentDto})
+  @ApiBody({ type: CreateStudentDto })
   create(@Body() createStudentDto: CreateStudentDto) {
     return this.studentsService.create(createStudentDto);
   }
-  
+
   @Post('registration')
-  @ApiBody({type: CreateRegistrationDto})
+  @ApiBody({ type: CreateRegistrationDto })
   createRegistration(@Body() registrationDto: CreateRegistrationDto) {
     return this.studentsService.createRegistration(registrationDto);
   }
-  
+
   @Get()
   findAll() {
     return this.studentsService.findAll();
   }
-  
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.studentsService.findOne(id);
   }
-  
+
+  @Get('registrations/:id')
+  findRegisters(@Param('id') id: string) {
+    return this.studentsService.findRegistrations(id);
+  }
+
   @Patch(':id')
-  @ApiBody({type: UpdateStudentDto})
+  @ApiBody({ type: UpdateStudentDto })
   update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
     return this.studentsService.update(id, updateStudentDto);
   }
-  
+
   @Patch('registration/:id')
-  @ApiBody({type: UpdateRegistrationDto})
-  updateRegistration(@Param('id') id: string, @Body() updateRegistrationDto: UpdateRegistrationDto) {
+  @ApiBody({ type: UpdateRegistrationDto })
+  updateRegistration(
+    @Param('id') id: string,
+    @Body() updateRegistrationDto: UpdateRegistrationDto,
+  ) {
     return this.studentsService.updateRegistration(id, updateRegistrationDto);
   }
 

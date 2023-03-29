@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
-import { CreateRegistrationDto } from '../students/dto/create-registration';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 

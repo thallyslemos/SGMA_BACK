@@ -35,6 +35,14 @@ export class StudentsService {
     return await this.prisma.student.findUnique({ where: { id } });
   }
 
+  findRegistrations(id: string) {
+    return this.prisma.coursesStudents.findMany({
+      where: {
+        id_student: id,
+      },
+    });
+  }
+
   async update(id: string, updateStudentDto: UpdateStudentDto) {
     const studentExists = await this.prisma.student.findFirst({
       where: {
@@ -88,7 +96,7 @@ export class StudentsService {
     if (!studentExists) {
       throw new ConflictException('Aluno não encontrado"');
     }
-    
+
     const registrationExists = this.prisma.coursesStudents.findFirst({
       where: {
         id_course: createDto.id_course,
@@ -96,8 +104,10 @@ export class StudentsService {
       },
     });
 
-    if(registrationExists){
-      throw new ConflictException(`O aluno ${studentExists.name} já está matriculado no modulo ${courseExists.name}.`)
+    if (registrationExists) {
+      throw new ConflictException(
+        `O aluno ${studentExists.name} já está matriculado no modulo ${courseExists.name}.`,
+      );
     }
     return await this.prisma.coursesStudents.create({
       data: createDto,

@@ -84,7 +84,6 @@ export class StudentsService {
         id: createDto.id_course,
       },
     });
-    console.log(courseExists);
 
     if (!courseExists) {
       throw new ConflictException('Curso não encontrado"');
@@ -100,10 +99,10 @@ export class StudentsService {
       throw new ConflictException('Aluno não encontrado"');
     }
 
-    const registrationExists = this.prisma.coursesStudents.findFirst({
+    const registrationExists = await this.prisma.coursesStudents.findFirst({
       where: {
-        id_course: createDto.id_course,
         id_student: createDto.id_student,
+        id_course: createDto.id_course,
       },
     });
 

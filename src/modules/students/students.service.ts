@@ -40,6 +40,9 @@ export class StudentsService {
       where: {
         id_student: id,
       },
+      include: {
+        course: true,
+      },
     });
   }
 

@@ -46,6 +46,11 @@ export class StudentsController {
     return this.studentsService.findRegistrations(id);
   }
 
+  @Get('register/:id')
+  findRegister(@Param('id') id: string) {
+    return this.studentsService.findRegister(id);
+  }
+
   @Patch(':id')
   @ApiBody({ type: UpdateStudentDto })
   update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {

@@ -46,6 +46,14 @@ export class StudentsService {
     });
   }
 
+  findRegister(id: string) {
+    return this.prisma.coursesStudents.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   async update(id: string, updateStudentDto: UpdateStudentDto) {
     const studentExists = await this.prisma.student.findFirst({
       where: {

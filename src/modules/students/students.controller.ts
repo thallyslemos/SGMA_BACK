@@ -25,7 +25,7 @@ export class StudentsController {
     return this.studentsService.create(createStudentDto);
   }
 
-  @Post('registration')
+  @Post('registrations')
   @ApiBody({ type: CreateRegistrationDto })
   createRegistration(@Body() registrationDto: CreateRegistrationDto) {
     return this.studentsService.createRegistration(registrationDto);
@@ -57,7 +57,7 @@ export class StudentsController {
     return this.studentsService.update(id, updateStudentDto);
   }
 
-  @Patch('registration/:id')
+  @Patch('registrations/:id')
   @ApiBody({ type: UpdateRegistrationDto })
   updateRegistration(
     @Param('id') id: string,

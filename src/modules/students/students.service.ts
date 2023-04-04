@@ -82,18 +82,6 @@ export class StudentsService {
     if (!studentExists) {
       throw new ConflictException('Aluno não encontrado!');
     }
-    const registrations = await this.prisma.coursesStudents.findMany({
-      where: {
-        id_student: id,
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    registrations.map(async (data) => {
-      await this.removeRegistration(data.id);
-    });
 
     return await this.prisma.student.delete({
       where: {

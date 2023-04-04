@@ -70,4 +70,8 @@ export class StudentsController {
   remove(@Param('id') id: string) {
     return this.studentsService.remove(id);
   }
+  @Delete('registrations/:id')
+  removeRegistration(@Param('id') id: string) {
+    return this.studentsService.removeRegistration(id);
+  }
 }

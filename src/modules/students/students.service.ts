@@ -82,8 +82,24 @@ export class StudentsService {
     if (!studentExists) {
       throw new ConflictException('Aluno não encontrado!');
     }
+    const registrations = await this.prisma.coursesStudents.findMany({
+      where: {
+        id_student: id,
+      },
+      select: {
+        id: true,
+      },
+    });
 
-    return this.prisma.student.delete({ where: { id } });
+    registrations.map(async (data) => {
+      await this.removeRegistration(data.id);
+    });
+
+    return await this.prisma.student.delete({
+      where: {
+        id,
+      },
+    });
   }
 
   async createRegistration(createDto: CreateRegistrationDto) {
@@ -129,5 +145,19 @@ export class StudentsService {
       where: { id },
       data: updateDto,
     });
+  }
+
+  async removeRegistration(id: string) {
+    const registration = await this.prisma.coursesStudents.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!registration) {
+      throw new ConflictException('Mtricula não encontrada!');
+    }
+
+    return this.prisma.coursesStudents.delete({ where: { id } });
   }
 }

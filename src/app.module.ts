@@ -7,9 +7,17 @@ import { CoursesModule } from './modules/courses/courses.module';
 import { PrismaService } from './common/prisma/prisma.service';
 import { SwaggerModule } from '@nestjs/swagger';
 import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './common/auth/auth.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), SwaggerModule, StudentsModule, CoursesModule, UsersModule],
+  imports: [
+    ConfigModule.forRoot(),
+    SwaggerModule,
+    StudentsModule,
+    CoursesModule,
+    UsersModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

@@ -100,4 +100,20 @@ export class UsersService {
       throw new ConflictException('As credencias do usuário não conferem!');
     }
   }
+
+  async findByName(username: string) {
+    const userExists = await this.prisma.user.findUnique({
+      where: {
+        name: username,
+      },
+    });
+
+    return userExists;
+
+    //   if (userLogin && userLogin.password == user.password) {
+    //     return userLogin;
+    //   } else {
+    //     throw new ConflictException('As credencias do usuário não conferem!');
+    //   }
+  }
 }

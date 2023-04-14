@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
@@ -13,6 +14,8 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { CreateRegistrationDto } from './dto/create-registration';
 import { UpdateRegistrationDto } from './dto/update-registration.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'src/common/auth/jwt-auth.guard';
 
 @ApiTags('Alunos')
 @Controller('students')
@@ -30,7 +33,7 @@ export class StudentsController {
   createRegistration(@Body() registrationDto: CreateRegistrationDto) {
     return this.studentsService.createRegistration(registrationDto);
   }
-
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.studentsService.findAll();
